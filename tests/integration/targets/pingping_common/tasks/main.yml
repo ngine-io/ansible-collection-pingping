@@ -1,0 +1,5 @@
+---
+- name: ensure api token provided
+  assert:
+    that:
+      - pingping_api_token != ''

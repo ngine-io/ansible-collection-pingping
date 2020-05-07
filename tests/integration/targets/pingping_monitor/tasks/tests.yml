@@ -1,0 +1,114 @@
+---
+- name: Create monitor in check mode
+  ngine_io.pingping.pingping_monitor:
+    name: '{{ pingping_resource_prefix }}-monitor'
+    url: '{{ pingping_monitor_url }}'
+  register: res
+  check_mode: yes
+- name: 'VERIFY: Create monitor in check mode'
+  assert:
+    that:
+      - res is changed
+      - not res.pingping_monitor
+
+- name: Create monitor
+  ngine_io.pingping.pingping_monitor:
+    name: '{{ pingping_resource_prefix }}-monitor'
+    url: '{{ pingping_monitor_url }}'
+  register: res
+- name: 'VERIFY: Create monitor'
+  assert:
+    that:
+      - res is changed
+      - res.pingping_monitor.alias == '{{ pingping_resource_prefix }}-monitor'
+      - res.pingping_monitor.url == pingping_monitor_url
+
+- name: Remember id
+  set_fact:
+    monitor_id: '{{ res.pingping_monitor.id }}'
+
+- name: Create monitor idempotence
+  ngine_io.pingping.pingping_monitor:
+    name: '{{ pingping_resource_prefix }}-monitor'
+    url: '{{ pingping_monitor_url }}'
+  register: res
+- name: 'VERIFY: Create monitor idempotence'
+  assert:
+    that:
+      - res is not changed
+      - res.pingping_monitor.alias == '{{ pingping_resource_prefix }}-monitor'
+      - res.pingping_monitor.url == pingping_monitor_url
+
+- name: Update monitor in check mode
+  ngine_io.pingping.pingping_monitor:
+    name: '{{ pingping_resource_prefix }}-monitor'
+    url: '{{ pingping_monitor_url }}/?foo='
+  register: res
+  check_mode: yes
+- name: 'VERIFY: Update monitor in check mode'
+  assert:
+    that:
+      - res is changed
+      - res.pingping_monitor.alias == '{{ pingping_resource_prefix }}-monitor'
+      - res.pingping_monitor.url == pingping_monitor_url
+
+- name: Update monitor
+  ngine_io.pingping.pingping_monitor:
+    name: '{{ pingping_resource_prefix }}-monitor'
+    url: '{{ pingping_monitor_url }}/?foo'
+  register: res
+- name: 'VERIFY: Update monitor'
+  assert:
+    that:
+      - res is changed
+      - res.pingping_monitor.alias == '{{ pingping_resource_prefix }}-monitor'
+      - res.pingping_monitor.url == '{{ pingping_monitor_url }}/?foo='
+
+- name: Update monitor idempotence
+  ngine_io.pingping.pingping_monitor:
+    id: '{{ monitor_id }}'
+    name: '{{ pingping_resource_prefix }}-monitor'
+    url: '{{ pingping_monitor_url }}/?foo'
+  register: res
+- name: 'VERIFY: Update monitor idempotence'
+  assert:
+    that:
+      - res is not changed
+      - res.pingping_monitor.alias == '{{ pingping_resource_prefix }}-monitor'
+      - res.pingping_monitor.url == '{{ pingping_monitor_url }}/?foo='
+
+- name: Delete monitor in check mode
+  ngine_io.pingping.pingping_monitor:
+    name: '{{ pingping_resource_prefix }}-monitor'
+    state: absent
+  register: res
+  check_mode: yes
+- name: 'VERIFY: Delete monitor in check mode'
+  assert:
+    that:
+      - res is changed
+      - res.pingping_monitor.alias == '{{ pingping_resource_prefix }}-monitor'
+      - res.pingping_monitor.url == '{{ pingping_monitor_url }}/?foo='
+
+- name: Delete monitor
+  ngine_io.pingping.pingping_monitor:
+    name: '{{ pingping_resource_prefix }}-monitor'
+    state: absent
+  register: res
+- name: 'VERIFY: Delete monitor'
+  assert:
+    that:
+      - res is changed
+      - res.pingping_monitor.alias == '{{ pingping_resource_prefix }}-monitor'
+      - res.pingping_monitor.url == '{{ pingping_monitor_url }}/?foo='
+
+- name: Delete monitor idempotence
+  ngine_io.pingping.pingping_monitor:
+    name: '{{ pingping_resource_prefix }}-monitor'
+    state: absent
+  register: res
+- name: 'VERIFY: Delete monitor idempotence'
+  assert:
+    that:
+      - res is not changed
+      - not res.pingping_monitor

@@ -1,0 +1,18 @@
+---
+authors:
+  - "René Moser <mail@renemoser.net>"
+dependencies: {}
+description: 'Ansible Collection for pingping.io'
+documentation: ''
+homepage: 'https://github.com/ngine-io/ansible-collection-pingping'
+issues: 'https://github.com/ngine-io/ansible-collection-pingping/issues'
+license: GPL-3.0-or-later
+name: pingping
+namespace: ngine_io
+readme: README.md
+repository: 'https://github.com/ngine-io/ansible-collection-pingping'
+tags:
+  - cloud
+  - pingping
+  - ngine_io
+version: 0.0.1

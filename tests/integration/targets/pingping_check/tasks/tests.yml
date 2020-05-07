@@ -1,0 +1,97 @@
+---
+- name: Setup monitor
+  ngine_io.pingping.pingping_monitor:
+    name: '{{ pingping_resource_prefix }}-monitor'
+    url: '{{ pingping_monitor_url }}'
+
+- name: Update monitor check uptime in check mode
+  ngine_io.pingping.pingping_check:
+    name: uptime
+    monitor: '{{ pingping_resource_prefix }}-monitor'
+    # 1/2 day
+    interval: 900
+    # 14 days
+    notification_threshold: 0
+    state: disabled
+  register: res
+  check_mode: yes
+- name: 'VERIFY: Change monitor check uptime'
+  assert:
+    that:
+      - res is changed
+      - res.pingping_check.is_enabled
+      - res.pingping_check.interval != 900
+
+- name: Update monitor check uptime
+  ngine_io.pingping.pingping_check:
+    name: uptime
+    monitor: '{{ pingping_resource_prefix }}-monitor'
+    # 1/2 day
+    interval: 900
+    # 14 days
+    notification_threshold: 0
+    state: disabled
+  register: res
+- name: 'VERIFY: Change monitor check uptime'
+  assert:
+    that:
+      - res is changed
+      - not res.pingping_check.is_enabled
+      - res.pingping_check.interval == 900
+
+- name: Update monitor check uptime idempotence
+  ngine_io.pingping.pingping_check:
+    name: uptime
+    monitor: '{{ pingping_resource_prefix }}-monitor'
+    # 1/2 day
+    interval: 900
+    # 14 days
+    notification_threshold: 0
+    state: disabled
+  register: res
+- name: 'VERIFY: Change monitor check uptime idempotence'
+  assert:
+    that:
+      - res is not changed
+      - not res.pingping_check.is_enabled
+      - res.pingping_check.interval == 900
+
+- name: Enable monitor check uptime in check mode
+  ngine_io.pingping.pingping_check:
+    name: uptime
+    monitor: '{{ pingping_resource_prefix }}-monitor'
+    state: enabled
+  register: res
+  check_mode: yes
+- name: 'VERIFY: Change monitor check uptime'
+  assert:
+    that:
+      - res is changed
+      - not res.pingping_check.is_enabled
+      - res.pingping_check.interval == 900
+
+- name: Enable monitor check uptime
+  ngine_io.pingping.pingping_check:
+    name: uptime
+    monitor: '{{ pingping_resource_prefix }}-monitor'
+    state: enabled
+  register: res
+- name: 'VERIFY: Change monitor check uptime'
+  assert:
+    that:
+      - res is changed
+      - res.pingping_check.is_enabled
+      - res.pingping_check.interval == 900
+
+- name: Enable monitor check uptime idempotence
+  ngine_io.pingping.pingping_check:
+    name: uptime
+    monitor: '{{ pingping_resource_prefix }}-monitor'
+    state: enabled
+  register: res
+- name: 'VERIFY: Change monitor check uptime idempotence'
+  assert:
+    that:
+      - res is not changed
+      - res.pingping_check.is_enabled
+      - res.pingping_check.interval == 900

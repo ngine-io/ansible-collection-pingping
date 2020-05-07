@@ -1,0 +1,4 @@
+---
+pingping_api_token: "{{ lookup('env', 'PINGPING_API_TOKEN') }}"
+pingping_api_url: https://pingping.io/webapi
+pingping_resource_prefix: "ansible-test"

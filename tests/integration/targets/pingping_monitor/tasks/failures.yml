@@ -1,0 +1,36 @@
+---
+- name: Fail missing params
+  ngine_io.pingping.pingping_monitor:
+  register: res
+  ignore_errors: True
+- name: 'VERIFY: Fail name and id'
+  assert:
+    that:
+      - res is failed
+
+- name: Create two monitors with the same name
+  uri:
+    url: '{{ pingping_api_url }}/monitors'
+    method: POST
+    headers:
+      Authorization: 'Bearer {{ pingping_api_token }}'
+      Content-Type: 'application/json'
+    body:
+      alias: '{{ pingping_resource_prefix }}-duplicate'
+      url: '{{ pingping_api_url }}?count={{ item }}'
+    body_format: json
+    status_code: 200
+  register: duplicate
+  with_sequence: count=2
+
+- name: Try access to duplicate name
+  ngine_io.pingping.pingping_monitor:
+    name: '{{ pingping_resource_prefix }}-duplicate'
+    url: '{{ pingping_api_url }}'
+  register: res
+  ignore_errors: true
+- name: 'VERIFY: Try access to duplicate name'
+  assert:
+    that:
+    - res is failed
+    - res.msg.startswith('More than one monitor with name exists')

@@ -1,0 +1,19 @@
+---
+- name: List all monitors
+  uri:
+    url: '{{ pingping_api_url }}/monitors'
+    headers:
+      Authorization: 'Bearer {{ pingping_api_token }}'
+      Content-Type: 'application/json'
+    status_code: 200
+    body_format: json
+  register: monitors
+
+- name: Remove all pingping created by this test run
+  ngine_io.pingping.pingping_monitor:
+    id: '{{ item.id }}'
+    state: absent
+  when: pingping_resource_prefix in item.alias
+  with_items: '{{ monitors.json.data }}'
+  loop_control:
+    label: '{{ item.alias }} ({{ item.id }})'
