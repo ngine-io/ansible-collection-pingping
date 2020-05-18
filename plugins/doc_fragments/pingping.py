@@ -8,7 +8,6 @@ __metaclass__ = type
 
 class ModuleDocFragment(object):
 
-    # Standard cloudstack documentation fragment
     DOCUMENTATION = '''
 options:
   api_token:

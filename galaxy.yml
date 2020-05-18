@@ -12,7 +12,7 @@ namespace: ngine_io
 readme: README.md
 repository: 'https://github.com/ngine-io/ansible-collection-pingping'
 tags:
-  - cloud
+  - monitoring
   - pingping
   - ngine_io
-version: 0.0.1
+version: 0.0.2
