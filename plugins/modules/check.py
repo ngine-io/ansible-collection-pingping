@@ -16,7 +16,7 @@ description:
   - Enable, update and disable monitor checks.
 author:
   - René Moser (@resmo)
-version_added: "0.0.1"
+version_added: "1.0.0"
 options:
   name:
     description:
@@ -54,27 +54,23 @@ extends_documentation_fragment: ngine_io.pingping.pingping
 EXAMPLES = '''
 ---
 - name: Increase interval for uptime check
-  ngine_io.pingping.check
+  ngine_io.pingping.check:
     name: uptime
     monitor: my-name
-    # 15 minutes
     interval: 900
-    # immediately
     notification_threshold: 0
     api_token: xxxxxx
 
 - name: Set interval and notification threshold for certificates health check
-  ngine_io.pingping.check
+  ngine_io.pingping.check:
     name: certificate_health
     monitor: my-name
-    # 1/2 day
     interval: 43200
-    # 14 days
     notification_threshold: 1209600
     api_token: xxxxxx
 
 - name: Disable the certificates health check
-  ngine_io.pingping.check
+  ngine_io.pingping.check:
     name: certificate_health
     monitor: my-name
     state: disabled
@@ -83,7 +79,7 @@ EXAMPLES = '''
 
 RETURN = '''
 ---
-ngine_io.pingping.check
+pingping_check:
   description: Response from Pingping API
   returned: success
   type: complex
@@ -158,7 +154,7 @@ class AnsiblePingpingCheck(AnsiblePingpingBase):
 
     def __init__(self, module):
         super(AnsiblePingpingCheck, self).__init__(module)
-        self.namespace = "check"
+        self.namespace = "pingping_check"
 
     def _is_diff(self, data, check):
         is_diff = False

@@ -16,7 +16,7 @@ description:
   - Create, update and remove monitors.
 author:
   - René Moser (@resmo)
-version_added: "1.0"
+version_added: "1.0.0"
 options:
   name:
     description:
@@ -83,7 +83,7 @@ EXAMPLES = '''
 
 RETURN = '''
 ---
-ngine_io.pingping.monitor:
+pingping_monitor:
   description: Response from Pingping API
   returned: success
   type: complex
@@ -171,7 +171,7 @@ class AnsiblePingpingMonitor(AnsiblePingpingBase):
 
     def __init__(self, module):
         super(AnsiblePingpingMonitor, self).__init__(module)
-        self.namespace = "monitor"
+        self.namespace = "pingping_monitor"
 
     def _create(self):
         self._result['changed'] = True
