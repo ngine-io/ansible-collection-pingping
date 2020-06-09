@@ -1,6 +1,6 @@
 ---
 - name: Fail missing params
-  ngine_io.pingping.pingping_check:
+  ngine_io.pingping.check:
   register: res
   ignore_errors: True
 - name: 'VERIFY: Fail name'
@@ -24,7 +24,7 @@
   with_sequence: count=2
 
 - name: Try access to duplicate name
-  ngine_io.pingping.pingping_check:
+  ngine_io.pingping.check:
     monitor: '{{ pingping_resource_prefix }}-duplicate'
     name: uptime
   register: res
@@ -36,7 +36,7 @@
     - res.msg.startswith('More than one monitor with name exists')
 
 - name: Fail required params required together
-  ngine_io.pingping.pingping_check:
+  ngine_io.pingping.check:
     name: uptime
     monitor: '{{ pingping_resource_prefix }}-duplicate'
     interval: 900

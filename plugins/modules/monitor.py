@@ -10,7 +10,7 @@ __metaclass__ = type
 
 DOCUMENTATION = '''
 ---
-module: pingping_monitor
+module: monitor
 short_description: Manages monitors on pingping.io
 description:
   - Create, update and remove monitors.
@@ -50,32 +50,32 @@ extends_documentation_fragment: ngine_io.pingping.pingping
 EXAMPLES = '''
 ---
 - name: Ensure a monitor exists
-  pingping_monitor:
+  ngine_io.pingping.monitor:
     name: my-name
     url: https://www.example.com
     api_token: xxxxxx
 
 - name: Ensure a monitor exists with modified checks
-  pingping_monitor:
+  ngine_io.pingping.monitor:
     name: my-name
     url: https://www.example.com
     api_token: xxxxxx
 
 - name: Ensure a monitor with ID has expected name
-  pingping_monitor:
+  ngine_io.pingping.monitor:
     id: 123
     name: my-name
     url: https://www.example.com
     api_token: xxxxxx
 
 - name: Ensure a monitor by name is absent
-  pingping_monitor:
+  ngine_io.pingping.monitor:
     name: my-name
     state: absent
     api_token: xxxxxx
 
 - name: Ensure a monitor by id is absent
-  pingping_monitor:
+  ngine_io.pingping.monitor:
     id: 123
     state: absent
     api_token: xxxxxx
@@ -83,7 +83,7 @@ EXAMPLES = '''
 
 RETURN = '''
 ---
-pingping_monitor:
+ngine_io.pingping.monitor:
   description: Response from Pingping API
   returned: success
   type: complex
@@ -171,7 +171,7 @@ class AnsiblePingpingMonitor(AnsiblePingpingBase):
 
     def __init__(self, module):
         super(AnsiblePingpingMonitor, self).__init__(module)
-        self.namespace = "pingping_monitor"
+        self.namespace = "monitor"
 
     def _create(self):
         self._result['changed'] = True

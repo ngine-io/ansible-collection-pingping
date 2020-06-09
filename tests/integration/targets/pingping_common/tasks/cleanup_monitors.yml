@@ -10,7 +10,7 @@
   register: monitors
 
 - name: Remove all pingping created by this test run
-  ngine_io.pingping.pingping_monitor:
+  ngine_io.pingping.monitor:
     id: '{{ item.id }}'
     state: absent
   when: pingping_resource_prefix in item.alias

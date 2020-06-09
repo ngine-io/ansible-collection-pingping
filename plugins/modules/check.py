@@ -10,7 +10,7 @@ __metaclass__ = type
 
 DOCUMENTATION = '''
 ---
-module: pingping_check
+module: check
 short_description: Manages monitor checks on pingping.io
 description:
   - Enable, update and disable monitor checks.
@@ -54,7 +54,7 @@ extends_documentation_fragment: ngine_io.pingping.pingping
 EXAMPLES = '''
 ---
 - name: Increase interval for uptime check
-  pingping_check:
+  ngine_io.pingping.check
     name: uptime
     monitor: my-name
     # 15 minutes
@@ -64,7 +64,7 @@ EXAMPLES = '''
     api_token: xxxxxx
 
 - name: Set interval and notification threshold for certificates health check
-  pingping_check:
+  ngine_io.pingping.check
     name: certificate_health
     monitor: my-name
     # 1/2 day
@@ -74,7 +74,7 @@ EXAMPLES = '''
     api_token: xxxxxx
 
 - name: Disable the certificates health check
-  pingping_check:
+  ngine_io.pingping.check
     name: certificate_health
     monitor: my-name
     state: disabled
@@ -83,7 +83,7 @@ EXAMPLES = '''
 
 RETURN = '''
 ---
-pingping_check:
+ngine_io.pingping.check
   description: Response from Pingping API
   returned: success
   type: complex
@@ -158,7 +158,7 @@ class AnsiblePingpingCheck(AnsiblePingpingBase):
 
     def __init__(self, module):
         super(AnsiblePingpingCheck, self).__init__(module)
-        self.namespace = "pingping_check"
+        self.namespace = "check"
 
     def _is_diff(self, data, check):
         is_diff = False

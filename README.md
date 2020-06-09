@@ -35,7 +35,7 @@ To use a module from pingping.io collection, please reference the full namespace
 - name: Using pingping.io collection
   hosts: localhost
   tasks:
-    - ngine_io.pingping.pingping_monitor:
+    - ngine_io.pingping.monitor:
         name: web1
         url: ...
         api_token: ...
@@ -50,7 +50,7 @@ Or you can add full namepsace and collecton name in the `collections` element:
   collections:
     - ngine_io.pingping
   tasks:
-    - pingping_monitor:
+    - monitor:
         name: web1
         url: ...
         api_token: ...

@@ -1,6 +1,6 @@
 ---
 - name: Fail missing params
-  ngine_io.pingping.pingping_monitor:
+  ngine_io.pingping.monitor:
   register: res
   ignore_errors: True
 - name: 'VERIFY: Fail name and id'
@@ -24,7 +24,7 @@
   with_sequence: count=2
 
 - name: Try access to duplicate name
-  ngine_io.pingping.pingping_monitor:
+  ngine_io.pingping.monitor:
     name: '{{ pingping_resource_prefix }}-duplicate'
     url: '{{ pingping_api_url }}'
   register: res
