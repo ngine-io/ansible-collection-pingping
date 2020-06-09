@@ -16,7 +16,7 @@ description:
   - Enable, update and disable monitor checks.
 author:
   - René Moser (@resmo)
-version_added: "1.0"
+version_added: "0.0.1"
 options:
   name:
     description:
