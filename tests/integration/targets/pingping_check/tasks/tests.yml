@@ -19,8 +19,8 @@
   assert:
     that:
       - res is changed
-      - res.check.is_enabled
-      - res.check.interval != 900
+      - res.pingping_check.is_enabled
+      - res.pingping_check.interval != 900
 
 - name: Update monitor check uptime
   ngine_io.pingping.check:
@@ -36,8 +36,8 @@
   assert:
     that:
       - res is changed
-      - not res.check.is_enabled
-      - res.check.interval == 900
+      - not res.pingping_check.is_enabled
+      - res.pingping_check.interval == 900
 
 - name: Update monitor check uptime idempotence
   ngine_io.pingping.check:
@@ -53,8 +53,8 @@
   assert:
     that:
       - res is not changed
-      - not res.check.is_enabled
-      - res.check.interval == 900
+      - not res.pingping_check.is_enabled
+      - res.pingping_check.interval == 900
 
 - name: Enable monitor check uptime in check mode
   ngine_io.pingping.check:
@@ -67,8 +67,8 @@
   assert:
     that:
       - res is changed
-      - not res.check.is_enabled
-      - res.check.interval == 900
+      - not res.pingping_check.is_enabled
+      - res.pingping_check.interval == 900
 
 - name: Enable monitor check uptime
   ngine_io.pingping.check:
@@ -80,8 +80,8 @@
   assert:
     that:
       - res is changed
-      - res.check.is_enabled
-      - res.check.interval == 900
+      - res.pingping_check.is_enabled
+      - res.pingping_check.interval == 900
 
 - name: Enable monitor check uptime idempotence
   ngine_io.pingping.check:
@@ -93,5 +93,5 @@
   assert:
     that:
       - res is not changed
-      - res.check.is_enabled
-      - res.check.interval == 900
+      - res.pingping_check.is_enabled
+      - res.pingping_check.interval == 900
