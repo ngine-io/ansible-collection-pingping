@@ -41,7 +41,7 @@ To use a module from pingping.io collection, please reference the full namespace
         api_token: ...
 ```
 
-Or you can add full namepsace and collecton name in the `collections` element:
+Or you can add full namespace and collecton name in the `collections` element:
 
 ```yaml
 ---
